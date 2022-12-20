@@ -4,11 +4,11 @@
    <p>{{student}}</p>
 
     <p class="text-danger" v-if="error"> {{error}}</p>
-    <form  @submit.prevent="login">
+    <form>
     <div class="login">
         <input type="email"  placeholder="Enter Email" v-model="form.email"/>
-        <input type="password"  placeholder="Password" v-model="form.password"/>
-        <input type="submit" value="Log In" />
+        <input type="password"  placeholder="Password" v-model="form.password"/>   
+            <button @click.prevent="login">Login</button>
     </div>
     </form>
 </div>
@@ -54,6 +54,14 @@ const login = async()=>{
 }
 .login{
     margin-top:100px;
+}
+
+.login button{
+    width:300px;
+    height:40px;
+    border:1px solid rgba(45,79,116,255);
+    color:#fff;
+    background-color: rgba(7,122,193,255) ;
 }
 
 </style>

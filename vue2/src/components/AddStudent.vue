@@ -1,7 +1,7 @@
 <template>
 <h1>Add Students</h1>
 <div>
-    <form  @submit.prevent="add">
+    <form  @submit.prevent="save">
         <div class="add">
         <input type="text"  placeholder="Enter Name" v-model="name" />
         <input type="text"  placeholder="Enter Address" v-model="address"/>
@@ -12,50 +12,145 @@
     </div>
     </form>
 </div>
+
+
+ <h2>Students list</h2>
+    <table class="table table-hover table-light mx-auto w-75">
+    <thead>
+        <tr>
+        <!-- <th scope="col">ID</th> -->
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="i in student" v-bind:key="i.id">
+        <!-- <th>{{i.id}}</th> -->
+
+        <td>{{i.name}}</td>
+        <td>{{i.address}}</td>
+        <td>{{i.phone}}</td>
+        <td>
+            <th>
+            <button type="button" class="btn btn-warning btn1" @click="edit(i)">Edit</button>
+            <button type="button" class="btn btn-danger" @click="remove(i.id)">Delete</button>
+            </th>
+        </td>
+        </tr> 
+    </tbody>
+    </table>
+
     
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import axios from 'axios'
+import { onMounted, ref } from "vue";
+import axios from "@/services/axios";
+import router from '@/router'
 
-const name = ref('')
-const address = ref('')
-const phone = ref('')
+const name = ref("");
+const address = ref("");
+const phone = ref("");
+const id = ref('')
 
-async function add(){
-    let result = await axios.post('/save', {
-        name:name.value,
-        address:address.value,
-        phone:phone.value,
+const student = ref({
+  
+});
 
-    });
-    if(result.status==200){
-        
-         router.push({name:'home'})
+async function StudentLoad() {
+  let result = await axios.get("/students");
+  console.log(result)
+  student.value = result.data;
+}
+onMounted(() => {
+  StudentLoad();
+});
+
+async function add() {
+   
+  let result = await axios.post("/save", {
+    name: name.value,
+    address: address.value,
+    phone: phone.value,
+  });
+  if (result.status == 200) {
+    router.push({ name: "AddStudent" });
+    StudentLoad();
+  }
+}
+function save(){
+        if(id.value==''){
+            add();
+            name.value='',
+            address.value='',
+            phone.value=''
+        }
+        else{
+            updatedata();
+            name.value='',
+            address.value='',
+            phone.value=''
+        }
     }
 
+function edit(i) {
+  name.value = i.name;
+  address.value =i.address;
+  phone.value = i.phone;
+  id.value =i.id;
 }
 
 
+async function updatedata() {
+    
+  let editrecords = await axios.put("/update/" + id.value, {
+    name: name.value,
+    address: address.value,
+    phone: phone.value,
+    id : id.value,
+  });
+    StudentLoad();
+
+}
+async function remove(id){
+  let url = await axios.delete("/delete/"+id)
+  
+ StudentLoad()
+}
+onMounted(() => {
+  StudentLoad();
+});
+
+
+// async function logout(){
+//     localStorage.clear();
+//     router.push({ name: "Login" });
+
+// }
 </script>
 <style scoped>
-.add input{
-    width:300px;
-    height: 40px;
-    padding-left: 20px;
-    display: block;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right:auto;
-    border:1px solid rgba(45,79,116,255);
+.add input {
+  width: 300px;
+  height: 40px;
+  padding-left: 20px;
+  display: block;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(45, 79, 116, 255);
 }
-.add button{
-     width:300px;
-    height:40px;
-    border:1px solid rgba(45,79,116,255);
-    color:#fff;
-    background-color: rgba(7,122,193,255) ;
+.add button {
+  width: 300px;
+  height: 40px;
+  border: 1px solid rgba(45, 79, 116, 255);
+  color: #fff;
+  background-color: rgba(7, 122, 193, 255);
 }
+.btn1 {
+  margin-right: 5px;
+}
+
 </style>
 

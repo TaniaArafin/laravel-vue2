@@ -9,7 +9,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{
+      needsAuth:true
+    }
+
   },
   {
     path: '/about',
@@ -32,12 +36,18 @@ const routes = [
   {
     path: '/addstudent',
     name: 'AddStudent',
-    component: AddStudent
+    component: AddStudent,
+    meta:{
+      needsAuth:true
+    }
   },
   {
     path: '/updatestudent',
     name: 'UpdateStudent',
-    component: UpdateStudent
+    component: UpdateStudent,
+    meta:{
+      needsAuth:true
+    }
   }
 
 ]
@@ -45,6 +55,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to,next) => {
+  if(to.meta.needsAuth && !localStorage.getItem('token')){
+    return {name: 'login'}
+
+  }
+  if(to.meta.needsAuth == false && localStorage.getItem('token')){
+    return {name:'addstudent'}
+  }
+    
+
 })
 
 export default router

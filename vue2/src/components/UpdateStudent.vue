@@ -1,4 +1,5 @@
 <template>
+<h1>Edit Infromation</h1>
     <form @submit.prevent="updatedata"> 
   
         <div class="update">
@@ -12,37 +13,75 @@
     </form>
 </template>
 <script>
-import axios from 'axios';
+import axios from '@/services/axios'
+import {onMounted, ref} from 'vue'
+
+
+// const name = ref('')
+// const address = ref('')
+// const phone = ref('')
+
+// const student = ref({})
+// async function UpdateStudent(){
+//   let result = await axios.put("/students"+ this.student.id)
+//   student.name=result.name,
+
+
+
+//   student.value =result.value
+
+  
+  
+// }
+
+
 export default{
     name:'UpdateStudent',
     data (){
     return {
-      
       student:{
-        
         name:'',
         address:'',
         phone:''
       }
     }
    },
-   methods:{
-    async updatedata(){
-    let editrecords = await axios.put('http://127.0.0.1/api/update/'+this.student.id, {
-    name: this.student.name,
-    address:this.address.name,
-    phone:this.phone.name,
-        
-    });
-    if(editrecords.status ==200){
-        this.router.push({name:'home'})
 
+    edit(student){
+        this.student= student;
+    },
+    updatedata(){
+        var editrecords = '/update/'+this.student.id;
+        axios.put(editrecords, this.student)
+        .then(
+            ({data})=>{
+               
+                this.student.name='';
+                this.student.address='';
+                this.student.phone='';
+                // this.student.id=''
+                alert("Updated");
+                this.StudentLoad();
+            }
+        )
     }
+//    methods:{
+//     async updatedata(){
+//     let editrecords = await axios.put('/update/'+this.student.id, {
+//     name: this.student.name,
+//     address:this.address.name,
+//     phone:this.phone.name,   
+//     });
+//     if(editrecords.status ==200){
+//         this.router.push({name:'home'})
+//     }
+//    }
+// },
 
-
-   }
-
-}
+// async mounted(){
+//     const editrecords = await axios.get('/update/'+this.student.id)
+//     this.student = editrecords.data
+// }
 }
 
 </script>

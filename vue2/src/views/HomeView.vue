@@ -1,52 +1,35 @@
 <template>
-<div>
-  <h1>Student List</h1>
-    
-    <table class="table table-hover table-light mx-auto w-75">
-    <thead>
-        <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Phone Number</th>
-        <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="student in result" v-bind:key="student.id">
-        <th>{{student.id}}</th>
-        <td>{{student.name}}</td>
-        <td>{{student.address}}</td>
-        <td>{{student.phone}}</td>
-        <td>
-            <th>
-            <button type="button" class="btn btn-warning" @click="edit(student)">Edit</button>
-            <button type="button" class="btn btn-danger" @click="remove(student)">Delete</button>
-            </th>
-        </td>
-        </tr> 
-    </tbody>
-    </table>
-   
-  </div>
+<button class="button" @click.prevent="logout">Log Out</button>
+<h1> Welcome to our Home Page</h1>
   
 </template>
 <script setup>
-import axios from '@/services/axios';
-import {ref} from 'vue';
+import axios from "@/services/axios";
+import router from '@/router';
+import storage from '@/services/storage'
+async function logout(){
+  const{data: response} =await axios.post("/logout").catch(error =>alert(error.mesage));
+  if(response.success){
+  storage.clearItem('token');
+  storage.clearItem('user');
+  return router.push({path: '/login'});
+  }
+  else{
+    alert("hhhhh");
+  }
 
 
-const student = ref({})
+    
 
-async function StudentLoad(){
-  let result = await axios.get("/students")
-  student.value=result.data
 }
-async function remove(id){
-  let url = await axios.delete("/delete/"+id)
-  alert('deleted')
-  this.StudentLoad()
-}
-
-
 </script>
+
+<style scoped>
+.button{
+  width:300px;
+  height:40px;
+  border:1px solid rgba(45,79,116,255);
+  color:#fff;
+  background-color: rgb(236, 104, 104) ;
+}
+</style>
