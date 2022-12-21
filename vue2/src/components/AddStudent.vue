@@ -8,7 +8,7 @@
         <input type="text"  placeholder="Enter phone" v-model="phone"/>
 
         
-        <button> Save Student Details</button>
+        <button> Add </button>
     </div>
     </form>
 </div>
@@ -55,9 +55,7 @@ const address = ref("");
 const phone = ref("");
 const id = ref('')
 
-const student = ref({
-  
-});
+const student = ref({});
 
 async function StudentLoad() {
   let result = await axios.get("/students");
@@ -78,8 +76,13 @@ async function add() {
   if (result.status == 200) {
     router.push({ name: "AddStudent" });
     StudentLoad();
-  }
+    // $toast.success(`Added`)
+
+    
 }
+  }
+ 
+
 function save(){
         if(id.value==''){
             add();
@@ -116,6 +119,7 @@ async function updatedata() {
 }
 async function remove(id){
   let url = await axios.delete("/delete/"+id)
+  // this.$toast.show(`Hey! I'm here`);
   
  StudentLoad()
 }

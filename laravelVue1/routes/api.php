@@ -19,14 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/students',[\App\Http\Controllers\StudentController::class, 'index']);
-Route::post('/save',[\App\Http\Controllers\StudentController::class, 'store']);
-Route::put('/update/{id}',[\App\Http\Controllers\StudentController::class, 'update']);
-Route::delete('/delete/{id}',[\App\Http\Controllers\StudentController::class, 'destroy']);
+Route::get('/students',[\App\Http\Controllers\StudentController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/save',[\App\Http\Controllers\StudentController::class, 'store'])->middleware('auth:sanctum');
+Route::put('/update/{id}',[\App\Http\Controllers\StudentController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/delete/{id}',[\App\Http\Controllers\StudentController::class, 'destroy'])->middleware('auth:sanctum');
+
+
+
 
 Route::controller(UserAuthController::class)->group(function(){
     Route::post('login', 'login');
     Route::post('register', 'register');
-
-
+    Route::post('logout', 'logout')->middleware('auth:sanctum');
 });
