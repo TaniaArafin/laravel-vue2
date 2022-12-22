@@ -1,6 +1,6 @@
 <template>
-<h1>Login page</h1>
-<div>
+<div class="headline">Login Page</div>
+<div class="rong">
    <p>{{student}}</p>
 
     <p class="text-danger" v-if="error"> {{error}}</p>
@@ -20,6 +20,7 @@
 import {reactive} from 'vue'
 import axios from '@/services/axios'
 import router from '@/router';
+
 
 
 let form = reactive({
@@ -51,9 +52,10 @@ const login = async()=>{
     margin-left: auto;
     margin-right:auto;
     border:1px solid rgba(45,79,116,255);
+    border-radius: 10px;
 }
 .login{
-    margin-top:100px;
+    margin-top:5px;
 }
 
 .login button{
@@ -62,6 +64,15 @@ const login = async()=>{
     border:1px solid rgba(45,79,116,255);
     color:#fff;
     background-color: rgba(7,122,193,255) ;
+    border-radius: 10px;
+}
+.rong{
+    background-color: rgb(218, 234, 247);
+    height:1000px;
+}
+.headline{
+    margin-top: 45px;
+    font-size: 35px;
 }
 
 </style>

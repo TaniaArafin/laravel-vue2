@@ -1,38 +1,87 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Register</router-link> |
-    <router-link to="/addstudent">Add Student</router-link> |<br><br>
-    
+<div class="rong">
+  
+<div class="nav nav-pills shadow-lg p-3 ">
+  <router-link to="/" class="nav-item nav-link">Home</router-link>
+  <router-link to="/about" class="nav-item nav-link" >About</router-link>
+  <router-link to="/login" class="nav-item nav-link" >Log In</router-link>
+  <router-link to="/register" class="nav-item nav-link" >Register</router-link>
+  <router-link to="/addstudent" class="nav-item nav-link" >Add Student</router-link>
+   <div class="dropdown">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Profile
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="#"><button type="button" class="btn btn-red" @click.prevent="logout">Log Out</button></a></li>
+  </ul>
+</div>
+ 
+ 
 
+  <!-- <router-link to="/profile" class="nav-item nav-link">Profile</router-link> -->
 
+</div>
 
-  </nav>
-  <router-view/>
+<router-view/>
+</div>
+
 </template>
+
+<script setup>
+
+import axios from "@/services/axios";
+import router from '@/router';
+import storage from '@/services/storage'
+
+async function logout(){
+  const{data: response} =await axios.post("/logout").catch(error =>alert(error.mesage));
+  if(response.success){
+  storage.clearItem('token');
+  storage.clearItem('user');
+  return router.push({path: '/login'});
+  }
+  else{
+    alert("hhhhh");
+  }
+
+
+    
+
+}
+</script>
+
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
   text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
+  color: #052847;
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #54606d;
+}
+.rong{
+  background-color: rgb(218, 234, 247);
+}
+.nav{
+  padding:20px;
+  background-color: #1d5aaa;
+  
+ 
+}
+.nav-item{
+  color:aliceblue
+}
+.nav-item:hover{
+  color:rgb(198, 207, 214)
+}
+#dropdownMenuButton1{
+  color:aliceblue;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+
 </style>

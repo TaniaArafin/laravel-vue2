@@ -4,6 +4,7 @@ import LoginVue from '../components/LoginVue.vue'
 import RegisterVue from '../components/RegisterVue.vue'
 import AddStudent from '../components/AddStudent.vue'
 import UpdateStudent from '../components/UpdateStudent.vue'
+import ProfileVue from '../components/ProfileVue.vue'
 
 const routes = [
   {
@@ -45,6 +46,14 @@ const routes = [
     path: '/updatestudent',
     name: 'UpdateStudent',
     component: UpdateStudent,
+    meta:{
+      needsAuth:true
+    }
+  },
+  {
+    path: '/profile',
+    name: 'ProfileVue',
+    component: ProfileVue,
     meta:{
       needsAuth:true
     }

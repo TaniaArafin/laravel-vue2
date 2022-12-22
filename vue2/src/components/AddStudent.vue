@@ -1,5 +1,6 @@
 <template>
-<h1>Add Students</h1>
+<div class="rong">
+ <div class="headline">Add Student</div>
 <div>
     <form  @submit.prevent="save">
         <div class="add">
@@ -12,9 +13,7 @@
     </div>
     </form>
 </div>
-
-
- <h2>Students list</h2>
+  <div class="headline">Student List</div>
     <table class="table table-hover table-light mx-auto w-75">
     <thead>
         <tr>
@@ -42,91 +41,95 @@
     </tbody>
     </table>
 
-    
+</div>   
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "@/services/axios";
-import router from '@/router'
+import router from "@/router";
+import { createToaster } from "@meforma/vue-toaster";
+const toaster = createToaster({});
 
 const name = ref("");
 const address = ref("");
 const phone = ref("");
-const id = ref('')
+const id = ref("");
 
 const student = ref({});
 
 async function StudentLoad() {
   let result = await axios.get("/students");
-  console.log(result)
+  console.log(result);
   student.value = result.data;
+  
 }
+
 onMounted(() => {
   StudentLoad();
 });
 
 async function add() {
-   
   let result = await axios.post("/save", {
     name: name.value,
     address: address.value,
     phone: phone.value,
   });
   if (result.status == 200) {
-    router.push({ name: "AddStudent" });
-    StudentLoad();
-    // $toast.success(`Added`)
+    toaster.success("Added Successfully", {
+      position: "top-left",
+      duration: 2358,
+    });
 
     
-}
+    router.push({ name: "AddStudent" });
+    StudentLoad();
   }
- 
+}
 
-function save(){
-        if(id.value==''){
-            add();
-            name.value='',
-            address.value='',
-            phone.value=''
-        }
-        else{
-            updatedata();
-            name.value='',
-            address.value='',
-            phone.value=''
-        }
-    }
+function save() {
+  if (id.value == "") {
+    add();
+    (name.value = ""), (address.value = ""), (phone.value = "");
+  } else {
+    updatedata();
+    (name.value = ""), (address.value = ""), (phone.value = "");
+    
+    toaster.success("Updated", {
+      position: "top-left",
+      duration: 2358,
+    });
+  }
+}
 
 function edit(i) {
   name.value = i.name;
-  address.value =i.address;
+  address.value = i.address;
   phone.value = i.phone;
-  id.value =i.id;
+  id.value = i.id;
+  
 }
 
-
 async function updatedata() {
-    
   let editrecords = await axios.put("/update/" + id.value, {
     name: name.value,
     address: address.value,
     phone: phone.value,
-    id : id.value,
+    id: id.value,
   });
-    StudentLoad();
-
+  StudentLoad();
 }
-async function remove(id){
-  let url = await axios.delete("/delete/"+id)
-  // this.$toast.show(`Hey! I'm here`);
-  
- StudentLoad()
+async function remove(id) {
+  let url = await axios.delete("/delete/" + id);
+   toaster.error("Deleted", {
+      position: "top-left",
+      duration: 2358,
+    });
+  StudentLoad();
 }
 onMounted(() => {
   StudentLoad();
 });
-
 
 // async function logout(){
 //     localStorage.clear();
@@ -136,7 +139,7 @@ onMounted(() => {
 </script>
 <style scoped>
 .add input {
-  width: 300px;
+  width: 350px;
   height: 40px;
   padding-left: 20px;
   display: block;
@@ -144,17 +147,27 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   border: 1px solid rgba(45, 79, 116, 255);
+  border-radius: 10px;
 }
 .add button {
-  width: 300px;
+  width: 350px;
   height: 40px;
   border: 1px solid rgba(45, 79, 116, 255);
   color: #fff;
   background-color: rgba(7, 122, 193, 255);
+  border-radius: 10px;
 }
 .btn1 {
   margin-right: 5px;
 }
+.rong {
+  background-color: rgb(218, 234, 247);
+  height:1200px;
+}
 
+.headline{
+    margin-top: 45px;
+    font-size: 35px;
+}
 </style>
 

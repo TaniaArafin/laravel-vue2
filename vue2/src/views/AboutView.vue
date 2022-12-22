@@ -1,5 +1,18 @@
 <template>
+
+<div class="rong">
   <div class="about">
-    <h1>This is an about page</h1>
+    <div class="headline">This is an about page</div>
   </div>
+</div>
 </template>
+<style>
+.rong{
+  background-color: rgb(218, 234, 247);
+   height:1000px;
+}
+.headline{
+    margin-top: 45px;
+    font-size: 35px;
+}
+</style>
