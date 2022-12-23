@@ -33,8 +33,12 @@
         <td>{{i.phone}}</td>
         <td>
             <th>
-            <button type="button" class="btn btn-warning btn1" @click="edit(i)">Edit</button>
-            <button type="button" class="btn btn-danger" @click="remove(i.id)">Delete</button>
+            <button type="button" class="btn btn-warning btn1" @click="edit(i)">
+              <span class="material-symbols-rounded">edit</span>
+            </button>
+            <button type="button" class="btn btn-danger" @click="remove(i.id)">
+              <span class="material-symbols-rounded">delete</span>
+            </button>
             </th>
         </td>
         </tr> 

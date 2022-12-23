@@ -1,12 +1,18 @@
 <template>
 <div class="rong">
   
-<div class="nav nav-pills shadow-lg p-3 ">
-  <router-link to="/" class="nav-item nav-link">Home</router-link>
+<div class="nav nav-pills">
+  <router-link to="/" class="nav-item nav-link">
+       <span class="material-symbols-rounded" data-toggle="tooltip" data-placement="bottom" title="Home">home</span>
+  </router-link>
   <router-link to="/about" class="nav-item nav-link" >About</router-link>
-  <router-link to="/login" class="nav-item nav-link" >Log In</router-link>
+  <router-link to="/login" class="nav-item nav-link" >
+       <span class="material-symbols-rounded" data-toggle="tooltip" data-placement="bottom" title="login">login</span>
+  </router-link>
   <router-link to="/register" class="nav-item nav-link" >Register</router-link>
-  <router-link to="/addstudent" class="nav-item nav-link" >Add Student</router-link>
+  <router-link to="/addstudent" class="nav-item nav-link" >
+      <span class="material-symbols-rounded" data-toggle="tooltip" data-placement="bottom" title="Add Student">person_add</span>
+  </router-link>
    <div class="dropdown">
   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     Profile
@@ -15,11 +21,6 @@
     <li><a class="dropdown-item" href="#"><button type="button" class="btn btn-red" @click.prevent="logout">Log Out</button></a></li>
   </ul>
 </div>
- 
- 
-
-  <!-- <router-link to="/profile" class="nav-item nav-link">Profile</router-link> -->
-
 </div>
 
 <router-view/>
@@ -43,10 +44,6 @@ async function logout(){
   else{
     alert("hhhhh");
   }
-
-
-    
-
 }
 </script>
 
@@ -70,13 +67,12 @@ nav a {
 .nav{
   padding:20px;
   background-color: #1d5aaa;
-  
- 
 }
 .nav-item{
-  color:aliceblue
+  color:aliceblue;
+  margin-left:10px;
 }
-.nav-item:hover{
+.nav-item:hover {
   color:rgb(198, 207, 214)
 }
 #dropdownMenuButton1{
