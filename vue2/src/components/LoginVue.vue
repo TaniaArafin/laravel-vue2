@@ -32,13 +32,15 @@ const login = async()=>{
         if(res.data.success){
             localStorage.setItem('token',res.data.data.token)
             router.push({name:'home'})
+            
         }
-        else{
+         else{
             alert(res.data.message)
         }
 
     })
 }
+
 
 </script>
 <style scoped>

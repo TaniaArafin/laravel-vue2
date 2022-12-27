@@ -33,7 +33,7 @@
         <td>{{i.phone}}</td>
         <td>
             <th>
-            <button type="button" class="btn btn-warning btn1" @click="edit(i)">
+            <button type="button" class="btn btn1" @click="edit(i)">
               <span class="material-symbols-rounded">edit</span>
             </button>
             <button type="button" class="btn btn-danger" @click="remove(i.id)">
@@ -124,12 +124,30 @@ async function updatedata() {
   StudentLoad();
 }
 async function remove(id) {
-  let url = await axios.delete("/delete/" + id);
-   toaster.error("Deleted", {
-      position: "top-left",
-      duration: 2358,
-    });
+  var delay = alertify.get('notifier','delay');
+  alertify.set('notifier','delay', 1);
+  alertify.set('notifier','position', 'top-right');
+  alertify.confirm('', 'It will be deleted permanently.', async function(){ 
+     let url = await axios.delete("/delete/" + id);
+  //  toaster.error("Deleted", {
+  //     position: "top-left",
+  //     duration: 2358,
+  //   });
   StudentLoad();
+    alertify.success('Ok') }
+                , function(){ 
+                  StudentLoad();
+                  
+                  alertify.error('Cancel')});
+
+
+
+  // let url = await axios.delete("/delete/" + id);
+  //  toaster.error("Deleted", {
+  //     position: "top-left",
+  //     duration: 2358,
+  //   });
+  // StudentLoad();
 }
 onMounted(() => {
   StudentLoad();
@@ -163,6 +181,7 @@ onMounted(() => {
 }
 .btn1 {
   margin-right: 5px;
+  background-color: rgba(7, 122, 193, 255);;
 }
 .rong {
   background-color: rgb(218, 234, 247);
