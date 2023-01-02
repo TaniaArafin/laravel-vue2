@@ -1,6 +1,6 @@
 <template>
 <div class="headline">Login Page</div>
-<div class="rong">
+<div class="rong card">
    <p>{{student}}</p>
 
     <p class="text-danger" v-if="error"> {{error}}</p>
@@ -75,6 +75,21 @@ const login = async()=>{
 .headline{
     margin-top: 45px;
     font-size: 35px;
+}
+.card {
+    margin-top: 10px;
+    margin-left: 15px;
+     margin-bottom: 220px;
+    height: 350px;
+    width: 400px;
+    margin-right: 16px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 20px #BCBCCB47;
+    border-radius: 5px;
+    
+    border: none;
+    display: inline-flex;
+    padding: 15px;
 }
 
 </style>

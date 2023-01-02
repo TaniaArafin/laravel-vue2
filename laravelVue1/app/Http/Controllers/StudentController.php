@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     public function index(){
-        $students = Student::all();
+        $students = Student::paginate(5);
         return response()->json($students);
     }
     public function store(Request $request){

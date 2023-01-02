@@ -1,5 +1,5 @@
 <template>
-    <div class="rong">
+    <div class="rong card">
         <form  @submit.prevent="save">
         <div class="register">
         <input type="text"  placeholder="Enter Name" v-model="form.name" />
@@ -79,6 +79,21 @@ const save = async()=>{
 }
 .rong{
     background-color: rgb(218, 234, 247);
-    height:1000px;
+  height:1000px;
+}
+
+.card {
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-bottom: 220px;
+    height: 350px;
+    width: 400px;
+    margin-right: 16px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 20px #BCBCCB47;
+    border-radius: 5px;
+    border: none;
+    display: inline-flex;
+    padding: 15px;
 }
 </style>

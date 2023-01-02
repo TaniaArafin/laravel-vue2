@@ -1,7 +1,7 @@
 <template>
 <div class="rong">
  <div class="headline">Add Student</div>
-<div>
+<div class="card">
     <form  @submit.prevent="save">
         <div class="add">
         <input type="text"  placeholder="Enter Name" v-model="name" />
@@ -25,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(i, index) in student " v-bind:key="i.id">
+        <tr v-for="(i, index) in student.data " v-bind:key="i.id">
         <th>{{index+1}}</th>
 
         <td>{{i.name}}</td>
@@ -46,9 +46,12 @@
     </tbody>
 
     </table>
+     <Bootstrap5Pagination align="center" :data="student" @pagination-change-page="StudentLoad"></Bootstrap5Pagination>
 
 
-</div>   
+</div> 
+
+
 </template>
 
 <script setup>
@@ -56,8 +59,12 @@ import { onMounted, ref } from "vue";
 import axios from "@/services/axios";
 import router from "@/router";
 import { createToaster } from "@meforma/vue-toaster";
-
 import SweetAlert from 'sweetalert';
+
+import { Bootstrap5Pagination } from 'laravel-vue-pagination';
+
+
+
 
 
 const toaster = createToaster({});
@@ -69,8 +76,9 @@ const id = ref("");
 
 const student = ref({});
 
-async function StudentLoad() {
-  let result = await axios.get("/students");
+
+async function StudentLoad(page=1) {
+  let result = await axios.get("/students?page="+page);
   console.log(result);
   student.value = result.data;
 }
@@ -158,6 +166,8 @@ onMounted(() => {
   StudentLoad();
 });
 
+
+
 // async function logout(){
 //     localStorage.clear();
 //     router.push({ name: "Login" });
@@ -197,6 +207,21 @@ onMounted(() => {
     margin-top: 45px;
     font-size: 35px;
     margin-bottom: 20px;
+}
+
+.card {
+    margin-top: 10px;
+    margin-left: 15px;
+    height: 350px;
+    width: 400px;
+    margin-right: 16px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 20px #BCBCCB47;
+    border-radius: 5px;
+    
+    border: none;
+    display: inline-flex;
+    padding: 15px;
 }
 </style>
 
