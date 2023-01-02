@@ -17,7 +17,7 @@
     <table class="table table-hover table-light mx-auto w-75">
     <thead>
         <tr>
-        <!-- <th scope="col">ID</th> -->
+        <th scope="col">Serial</th>
         <th scope="col">Name</th>
         <th scope="col">Address</th>
         <th scope="col">Phone Number</th>
@@ -25,25 +25,28 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="i in student" v-bind:key="i.id">
-        <!-- <th>{{i.id}}</th> -->
+        <tr v-for="(i, index) in student " v-bind:key="i.id">
+        <th>{{index+1}}</th>
 
         <td>{{i.name}}</td>
         <td>{{i.address}}</td>
         <td>{{i.phone}}</td>
         <td>
             <th>
-            <button type="button" class="btn btn1" @click="edit(i)">
+            <button type="button" class="btn btn1 btn-sm" @click="edit(i)">
               <span class="material-symbols-rounded">edit</span>
             </button>
-            <button type="button" class="btn btn-danger" @click="remove(i.id)">
+            <button type="button" class="btn btn-danger btn-sm" @click="remove(i.id)">
               <span class="material-symbols-rounded">delete</span>
             </button>
             </th>
         </td>
         </tr> 
+
     </tbody>
+
     </table>
+
 
 </div>   
 </template>
@@ -53,6 +56,10 @@ import { onMounted, ref } from "vue";
 import axios from "@/services/axios";
 import router from "@/router";
 import { createToaster } from "@meforma/vue-toaster";
+
+import SweetAlert from 'sweetalert';
+
+
 const toaster = createToaster({});
 
 const name = ref("");
@@ -66,7 +73,6 @@ async function StudentLoad() {
   let result = await axios.get("/students");
   console.log(result);
   student.value = result.data;
-  
 }
 
 onMounted(() => {
@@ -84,8 +90,6 @@ async function add() {
       position: "top-left",
       duration: 2358,
     });
-
-    
     router.push({ name: "AddStudent" });
     StudentLoad();
   }
@@ -121,6 +125,7 @@ async function updatedata() {
     phone: phone.value,
     id: id.value,
   });
+  SweetAlert('Success', 'Added successfuly', 'success');
   StudentLoad();
 }
 async function remove(id) {
@@ -191,6 +196,7 @@ onMounted(() => {
 .headline{
     margin-top: 45px;
     font-size: 35px;
+    margin-bottom: 20px;
 }
 </style>
 
